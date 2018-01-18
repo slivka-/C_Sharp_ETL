@@ -5,27 +5,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpEtl.ZDB_TELCOMDataSetTableAdapters;
+using System.IO;
+using System.Diagnostics;
 
 namespace CSharpEtl
 {
     class Program
     {
-        private static readonly string orclConnStr = "";
+        private static string orclConnStr;
 
         static void Main(string[] args)
         {
-            
+            Stopwatch stopwatch = new Stopwatch();
+            orclConnStr = File.ReadAllLines("oracleConnStr.txt")[0];
+            Console.CursorTop = 1;
+
             OracleConnection oracleConnection = new OracleConnection(orclConnStr);
             try
             {
                 oracleConnection.Open();
-                
-                string SUBSCRIPTION_PLAN_INSERT = "INSERT INTO ii738.SUBSCRIPTION_PLAN VALUES ('MS{0}',{1},'{2}')";
+                stopwatch.Start();
+                string SUBSCRIPTION_PLAN_INSERT = "INSERT INTO ii738.SUBSCRIPTION_PLAN (ID, COST, DESCRIPTION) VALUES (:1,:2,:3)";
                 using (var adapter = new Subscription_typeTableAdapter())
                 {
-                    var queries = adapter.GetData().Select(s => string.Format(SUBSCRIPTION_PLAN_INSERT, s.ID, s.Prize, s.Special)).ToList();
-                    foreach (var q in queries)
+                    var l = adapter.GetData().ToArray().Length;
+
+                    OracleParameter p_Id = new OracleParameter()
                     {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = adapter.GetData().Select(s => "MS" + s.ID).ToArray()
+                    };
+
+                    OracleParameter p_Prize = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = adapter.GetData().Select(s => s.Prize).ToArray()
+                    };
+
+                    OracleParameter p_Desc = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = adapter.GetData().Select(s => s.Special).ToArray()
+                    };
+
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = SUBSCRIPTION_PLAN_INSERT;
+                    cmd.ArrayBindCount = l;
+                    cmd.Parameters.Add(p_Id);
+                    cmd.Parameters.Add(p_Prize);
+                    cmd.Parameters.Add(p_Desc);
+                    cmd.ExecuteNonQuery();
+
+                    /*
                         OracleCommand cmd = new OracleCommand
                         {
                             Connection = oracleConnection,
@@ -33,13 +64,20 @@ namespace CSharpEtl
                             CommandType = System.Data.CommandType.Text
                         };
                         cmd.ExecuteNonQuery();
-                    }
-                }
-                Console.WriteLine("SUBS_DONE");
+                        Console.SetCursorPosition(1, Console.CursorTop-1);
+                        Console.WriteLine(c++ + " / " + queries.Count);*/
 
+                }
+                stopwatch.Stop();
+                Console.WriteLine("SUBSCRIPTION_PLAN DONE IN "+ stopwatch.Elapsed);
+                Console.WriteLine();
+                stopwatch.Reset();
+
+                stopwatch.Start();
                 string COUNTRY_INSERT = "INSERT INTO ii738.COUNTRY VALUES ('{0}',{1},'{2}')";
                 using (var adapter = new CountryTableAdapter())
                 {
+                    int c = 1;
                     var queries = adapter.GetData().Select(s => string.Format(COUNTRY_INSERT, s.Name, s.Population, s.Main_language)).ToList();
                     foreach (var q in queries)
                     {
@@ -50,10 +88,16 @@ namespace CSharpEtl
                             CommandType = System.Data.CommandType.Text
                         };
                         cmd.ExecuteNonQuery();
+                        Console.SetCursorPosition(1, Console.CursorTop-1);
+                        Console.WriteLine(c++ + " / " + queries.Count);
                     }
                 }
-                Console.WriteLine("COUNTRY_INSERT DONE");
+                stopwatch.Stop();
+                Console.WriteLine("COUNTRY_INSERT DONE IN " + stopwatch.Elapsed);
+                Console.WriteLine();
+                stopwatch.Reset();
 
+                /*
                 string PLACE_INSERT = "INSERT INTO ii738.PLACE VALUES('MS{0}','{1}',{2},{3},{4},'{5}',NULL,{6})";
                 using (var adapter = new REMOTE_PLACETableAdapter())
                 {
@@ -145,6 +189,7 @@ namespace CSharpEtl
                     }
                 }
                 Console.WriteLine("PHONE_NUMBER_INSERT DONE");
+                */
             }
             catch (OracleException ex)
             {
