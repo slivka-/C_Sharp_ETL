@@ -1,9 +1,8 @@
 ﻿using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSharpEtl.ZDB_TELCOMDataSetTableAdapters;
 using System.IO;
 using System.Diagnostics;
@@ -18,178 +17,367 @@ namespace CSharpEtl
         {
             Stopwatch stopwatch = new Stopwatch();
             orclConnStr = File.ReadAllLines("oracleConnStr.txt")[0];
-            Console.CursorTop = 1;
-
+ 
             OracleConnection oracleConnection = new OracleConnection(orclConnStr);
             try
             {
                 oracleConnection.Open();
-                stopwatch.Start();
-                string SUBSCRIPTION_PLAN_INSERT = "INSERT INTO ii738.SUBSCRIPTION_PLAN (ID, COST, DESCRIPTION) VALUES (:1,:2,:3)";
+
                 using (var adapter = new Subscription_typeTableAdapter())
                 {
-                    var l = adapter.GetData().ToArray().Length;
-
+                    stopwatch.Start();
+                    var data = adapter.GetData();
                     OracleParameter p_Id = new OracleParameter()
                     {
                         OracleDbType = OracleDbType.Varchar2,
-                        Value = adapter.GetData().Select(s => "MS" + s.ID).ToArray()
+                        Value = data.Select(s => "MS" + s.ID).ToArray()
                     };
-
                     OracleParameter p_Prize = new OracleParameter()
                     {
                         OracleDbType = OracleDbType.Int32,
-                        Value = adapter.GetData().Select(s => s.Prize).ToArray()
+                        Value = data.Select(s => s.Prize).ToArray()
                     };
-
                     OracleParameter p_Desc = new OracleParameter()
                     {
                         OracleDbType = OracleDbType.Varchar2,
-                        Value = adapter.GetData().Select(s => s.Special).ToArray()
+                        Value = data.Select(s => s.Special).ToArray()
                     };
-
                     OracleCommand cmd = oracleConnection.CreateCommand();
-                    cmd.CommandText = SUBSCRIPTION_PLAN_INSERT;
-                    cmd.ArrayBindCount = l;
+                    cmd.CommandText = "INSERT INTO ii738.SUBSCRIPTION_PLAN (ID, COST, DESCRIPTION) VALUES (:1,:2,:3)";
+                    cmd.ArrayBindCount = data.Count;
                     cmd.Parameters.Add(p_Id);
                     cmd.Parameters.Add(p_Prize);
                     cmd.Parameters.Add(p_Desc);
                     cmd.ExecuteNonQuery();
-
-                    /*
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                        Console.SetCursorPosition(1, Console.CursorTop-1);
-                        Console.WriteLine(c++ + " / " + queries.Count);*/
-
+                    stopwatch.Stop();
+                    Console.WriteLine("SUBSCRIPTION_PLAN DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                stopwatch.Stop();
-                Console.WriteLine("SUBSCRIPTION_PLAN DONE IN "+ stopwatch.Elapsed);
-                Console.WriteLine();
-                stopwatch.Reset();
 
-                stopwatch.Start();
-                string COUNTRY_INSERT = "INSERT INTO ii738.COUNTRY VALUES ('{0}',{1},'{2}')";
                 using (var adapter = new CountryTableAdapter())
                 {
-                    int c = 1;
-                    var queries = adapter.GetData().Select(s => string.Format(COUNTRY_INSERT, s.Name, s.Population, s.Main_language)).ToList();
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_Name = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                        Console.SetCursorPosition(1, Console.CursorTop-1);
-                        Console.WriteLine(c++ + " / " + queries.Count);
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.Name).ToArray()
+                    };
+                    OracleParameter p_Population = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.Population).ToArray()
+                    };
+                    OracleParameter p_Lang = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.Main_language).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.COUNTRY (NAME, POPULATION, LANGUAGE) VALUES (:1, :2, :3)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_Name);
+                    cmd.Parameters.Add(p_Population);
+                    cmd.Parameters.Add(p_Lang);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("COUNTRY DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                stopwatch.Stop();
-                Console.WriteLine("COUNTRY_INSERT DONE IN " + stopwatch.Elapsed);
-                Console.WriteLine();
-                stopwatch.Reset();
 
-                /*
-                string PLACE_INSERT = "INSERT INTO ii738.PLACE VALUES('MS{0}','{1}',{2},{3},{4},'{5}',NULL,{6})";
                 using (var adapter = new REMOTE_PLACETableAdapter())
                 {
-                    var queries = adapter.GetData().Select(s => string.Format(PLACE_INSERT, s.ID, s.NAME, s.POPULATION,s.X_COORDINATE,s.Y_COORDINATE,s.COUNTRYNAME,s.TRANSMITER_ID)).ToList();
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_ID = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS"+s.ID).ToArray()
+                    };
+                    OracleParameter p_Name = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.NAME).ToArray()
+                    };
+                    OracleParameter p_Population = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.POPULATION).ToArray()
+                    };
+                    OracleParameter p_xCord = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.X_COORDINATE).ToArray()
+                    };
+                    OracleParameter p_yCord = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.Y_COORDINATE).ToArray()
+                    };
+                    OracleParameter p_CountryName = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.COUNTRYNAME).ToArray()
+                    };
+                    OracleParameter p_TransmitterId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.TRANSMITER_ID).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.PLACE(ID, CITY, POPULATION, X_COORD, Y_COORD, COUNTRYNAME, TRANSMITERID) VALUES(:1, :2, :3, :4, :5, :6, :7)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_ID);
+                    cmd.Parameters.Add(p_Name);
+                    cmd.Parameters.Add(p_Population);
+                    cmd.Parameters.Add(p_xCord);
+                    cmd.Parameters.Add(p_yCord);
+                    cmd.Parameters.Add(p_CountryName);
+                    cmd.Parameters.Add(p_TransmitterId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                Console.WriteLine("PLACE_INSERT DONE");
-                
-                string CALL_INSERT = "INSERT INTO ii738.CALL VALUES('MS{0}',TO_TIMESTAMP('{1}','DD.MM.YYYY HH24:MI:SS'),TO_TIMESTAMP('{2}','DD.MM.YYYY HH24:MI:SS'),'REGULAR',NULL)";
+
                 using (var adapter = new CallTableAdapter())
                 {
-                    var queries = adapter.GetData().Select(s => string.Format(CALL_INSERT,s.ID,s.Date_Started.ToString("dd.MM.yyyy HH:mm:ss"),s.Date_Started.AddMinutes(s.Duration).ToString("dd.MM.yyyy HH:mm:ss"))).ToList();
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_ID = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS"+s.ID).ToArray()
+                    };
+                    OracleParameter p_DateStart = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => (OracleTimeStamp)s.Date_Started).ToArray()
+                    };
+                    OracleParameter p_DateEnd = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => (OracleTimeStamp)s.Date_Started.AddMinutes(s.Duration)).ToArray()
+                    };
+                    OracleParameter p_Type = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => {
+                            if (s.Is_Conference && s.Is_Video) return "VIDEO_CONFERENCE";
+                            else if (s.Is_Conference && !s.Is_Video) return "CONFERENCE";
+                            else if (!s.Is_Conference && s.Is_Video) return "VIDEO";
+                            else return "REGULAR";
+                        }).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.CALL (ID, START_TIME, END_TIME, TYPE) VALUES (:1, :2, :3, :4)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_ID);
+                    cmd.Parameters.Add(p_DateStart);
+                    cmd.Parameters.Add(p_DateEnd);
+                    cmd.Parameters.Add(p_Type);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("CALL DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                Console.WriteLine("CALL_INSERT DONE");
-                
-                string MESSAGE_INSERT = "INSERT INTO ii738.MESSAGE VALUES('MS{0}',{1},TO_TIMESTAMP('{2}','DD.MM.YYYY HH24:MI:SS'),NULL,NULL)";
-                using (var adapter = new MessageTableAdapter())
+
+                using (var adapter = new AllMessagesTableAdapter())
                 {
-                    var queries = adapter.GetData().Select(s => string.Format(MESSAGE_INSERT, s.ID, s.Msg_Length, s.Date_Sent.ToString("dd.MM.yyyy HH:mm:ss"))).ToList();
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_ID = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.ID).ToArray()
+                    };
+                    OracleParameter p_Length = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.LENGTH).ToArray()
+                    };
+                    OracleParameter p_DateSent = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => (OracleTimeStamp)s.DATE_SENT).ToArray()
+                    };
+                    OracleParameter p_DataAmount = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.DATA_AMOUNT).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.MESSAGE (ID, LENGTH, DATE_SENT, DATA_AMOUNT) VALUES (:1, :2, :3, :4)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_ID);
+                    cmd.Parameters.Add(p_Length);
+                    cmd.Parameters.Add(p_DateSent);
+                    cmd.Parameters.Add(p_DataAmount);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("MESSAGE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                Console.WriteLine("MESSAGE_INSERT DONE");
-                
-                string ACCOUNT_INSERT = "INSERT INTO ii738.ACCOUNT VALUES('MS{0}','{1}',NULL,'{2}',NULL,'{3}',NULL,TO_TIMESTAMP('{4}','DD.MM.YYYY HH24:MI:SS'),TO_TIMESTAMP('{5}','DD.MM.YYYY HH24:MI:SS'),NULL,'{6}')";
+
+                stopwatch.Start();
+                List<string> RemotePlaceData = new List<string>();
+                OracleCommand readCmd = new OracleCommand()
+                {
+                    Connection = oracleConnection,
+                    CommandText = "SELECT ID FROM ii738.PLACE ORDER BY TRANSMITERID",
+                    CommandType = System.Data.CommandType.Text
+                };
+                using (var rdr = readCmd.ExecuteReader())
+                    while (rdr.Read())
+                        RemotePlaceData.Add(rdr.GetValue(0).ToString());
+                stopwatch.Stop();
+                Console.WriteLine("FETCHED REMOTE PLACE DATA IN {0}",stopwatch.Elapsed);
+                stopwatch.Reset();
+
+                using (var adapter = new Transmiter_CallTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_CallId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.CallID).ToArray()
+                    };
+                    OracleParameter p_PlaceId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePlaceData[(int)s.TransmiterID]).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.CALL_PLACE (CALLID, PLACEID) VALUES (:1, :2)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_CallId);
+                    cmd.Parameters.Add(p_PlaceId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("CALL_PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                using (var adapter = new Transmiter_MessageTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_MessageId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.MessageID).ToArray()
+                    };
+                    OracleParameter p_PlaceId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePlaceData[(int)s.TransmiterID]).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.MESSAGE_PLACE (MESSAGEID, PLACEID) VALUES (:1, :2)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_MessageId);
+                    cmd.Parameters.Add(p_PlaceId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("MESSAGE_PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                RemotePlaceData = null;
+
                 using (var adapter = new ALL_SUBSTableAdapter())
                 {
-                    var queries = adapter.GetData().Select(s => string.Format(ACCOUNT_INSERT, s.ID, s.NAME, s.SURNAME, s.SEX, s.START_DATE, s.END_DATE, s.SUBSCRIPTION_PLANID)).ToList();
-                    int c = 0;
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_Id = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                        Console.SetCursorPosition(1, 0);
-                        Console.WriteLine(c+" / "+queries.Count);
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.ID).ToArray()
+                    };
+                    OracleParameter p_Name = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.NAME).ToArray()
+                    };
+                    OracleParameter p_Surname = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        IsNullable = true,
+                        Value = data.Select(s => s.SURNAME).ToArray()
+                    };
+                    OracleParameter p_Sex = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.SEX).ToArray()
+                    };
+                    OracleParameter p_StartDate = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => s.START_DATE).ToArray()
+                    };
+                    OracleParameter p_EndDate = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => s.END_DATE).ToArray()
+                    };
+                    OracleParameter p_SubscriptionPlanId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.SUBSCRIPTION_PLANID).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.ACCOUNT (ID, NAME, SURNAME, SEX, START_DATE, END_DATE, SUBSCRIPTION_PLANID) VALUES (:1, :2, :3, :4, :5, :6, :7)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_Id);
+                    cmd.Parameters.Add(p_Name);
+                    cmd.Parameters.Add(p_Surname);
+                    cmd.Parameters.Add(p_Sex);
+                    cmd.Parameters.Add(p_StartDate);
+                    cmd.Parameters.Add(p_EndDate);
+                    cmd.Parameters.Add(p_SubscriptionPlanId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("ACCOUNT DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                Console.WriteLine("ACCOUNT_INSERT DONE");
-                
-                string PHONE_NUMBER_INSERT = "INSERT INTO ii738.PHONE_NUMBER VALUES('MS{0}', {1}, {2},'{3}')";
-                using (var adapter = new ViewTableAdapter())
+
+                using (var adapter = new AllPhoneNumsTableAdapter())
                 {
-                    int tempC = 0;
-                    var queries = adapter.GetData().Select(s => string.Format(PHONE_NUMBER_INSERT, tempC++, s.Phone_Number, (s.Is_Active)?1:0, s.SUB_ID)).ToList();
-                    int c = 0;
-                    foreach (var q in queries)
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_Id = new OracleParameter()
                     {
-                        OracleCommand cmd = new OracleCommand
-                        {
-                            Connection = oracleConnection,
-                            CommandText = q,
-                            CommandType = System.Data.CommandType.Text
-                        };
-                        cmd.ExecuteNonQuery();
-                        Console.SetCursorPosition(1, 0);
-                        Console.WriteLine(c + " / " + queries.Count);
-                    }
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.ID).ToArray()
+                    };
+                    OracleParameter p_PhoneNumber = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.Phone_Number).ToArray()
+                    };
+                    OracleParameter p_isActive = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.Is_Active).ToArray()
+                    };
+                    OracleParameter p_AccountId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => s.Sub_Id).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.PHONE_NUMBER (ID, PH_NUMBER, IS_ACTIVE, ACCOUNTID) VALUES (:1, :2, :3, :4)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_Id);
+                    cmd.Parameters.Add(p_PhoneNumber);
+                    cmd.Parameters.Add(p_isActive);
+                    cmd.Parameters.Add(p_AccountId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    Console.WriteLine("PHONE_NUMBER DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
                 }
-                Console.WriteLine("PHONE_NUMBER_INSERT DONE");
-                */
             }
             catch (OracleException ex)
             {

@@ -64,7 +64,9 @@ namespace CSharpEtl {
         
         private ALL_SUBSDataTable tableALL_SUBS;
         
-        private ViewDataTable tableView;
+        private AllMessagesDataTable tableAllMessages;
+        
+        private AllPhoneNumsDataTable tableAllPhoneNums;
         
         private global::System.Data.DataRelation relationFKBusiness_C351324;
         
@@ -198,8 +200,11 @@ namespace CSharpEtl {
                 if ((ds.Tables["ALL_SUBS"] != null)) {
                     base.Tables.Add(new ALL_SUBSDataTable(ds.Tables["ALL_SUBS"]));
                 }
-                if ((ds.Tables["View"] != null)) {
-                    base.Tables.Add(new ViewDataTable(ds.Tables["View"]));
+                if ((ds.Tables["AllMessages"] != null)) {
+                    base.Tables.Add(new AllMessagesDataTable(ds.Tables["AllMessages"]));
+                }
+                if ((ds.Tables["AllPhoneNums"] != null)) {
+                    base.Tables.Add(new AllPhoneNumsDataTable(ds.Tables["AllPhoneNums"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -423,9 +428,19 @@ namespace CSharpEtl {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ViewDataTable View {
+        public AllMessagesDataTable AllMessages {
             get {
-                return this.tableView;
+                return this.tableAllMessages;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AllPhoneNumsDataTable AllPhoneNums {
+            get {
+                return this.tableAllPhoneNums;
             }
         }
         
@@ -556,8 +571,11 @@ namespace CSharpEtl {
                 if ((ds.Tables["ALL_SUBS"] != null)) {
                     base.Tables.Add(new ALL_SUBSDataTable(ds.Tables["ALL_SUBS"]));
                 }
-                if ((ds.Tables["View"] != null)) {
-                    base.Tables.Add(new ViewDataTable(ds.Tables["View"]));
+                if ((ds.Tables["AllMessages"] != null)) {
+                    base.Tables.Add(new AllMessagesDataTable(ds.Tables["AllMessages"]));
+                }
+                if ((ds.Tables["AllPhoneNums"] != null)) {
+                    base.Tables.Add(new AllPhoneNumsDataTable(ds.Tables["AllPhoneNums"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -712,10 +730,16 @@ namespace CSharpEtl {
                     this.tableALL_SUBS.InitVars();
                 }
             }
-            this.tableView = ((ViewDataTable)(base.Tables["View"]));
+            this.tableAllMessages = ((AllMessagesDataTable)(base.Tables["AllMessages"]));
             if ((initTable == true)) {
-                if ((this.tableView != null)) {
-                    this.tableView.InitVars();
+                if ((this.tableAllMessages != null)) {
+                    this.tableAllMessages.InitVars();
+                }
+            }
+            this.tableAllPhoneNums = ((AllPhoneNumsDataTable)(base.Tables["AllPhoneNums"]));
+            if ((initTable == true)) {
+                if ((this.tableAllPhoneNums != null)) {
+                    this.tableAllPhoneNums.InitVars();
                 }
             }
             this.relationFKBusiness_C351324 = this.Relations["FKBusiness_C351324"];
@@ -790,8 +814,10 @@ namespace CSharpEtl {
             base.Tables.Add(this.tableREMOTE_PLACE);
             this.tableALL_SUBS = new ALL_SUBSDataTable();
             base.Tables.Add(this.tableALL_SUBS);
-            this.tableView = new ViewDataTable();
-            base.Tables.Add(this.tableView);
+            this.tableAllMessages = new AllMessagesDataTable();
+            base.Tables.Add(this.tableAllMessages);
+            this.tableAllPhoneNums = new AllPhoneNumsDataTable();
+            base.Tables.Add(this.tableAllPhoneNums);
             this.relationFKBusiness_C351324 = new global::System.Data.DataRelation("FKBusiness_C351324", new global::System.Data.DataColumn[] {
                         this.tableCity.NameColumn}, new global::System.Data.DataColumn[] {
                         this.tableBusiness_Client.CityNameColumn}, false);
@@ -1004,7 +1030,13 @@ namespace CSharpEtl {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializeView() {
+        private bool ShouldSerializeAllMessages() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializeAllPhoneNums() {
             return false;
         }
         
@@ -1124,7 +1156,10 @@ namespace CSharpEtl {
         public delegate void ALL_SUBSRowChangeEventHandler(object sender, ALL_SUBSRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void ViewRowChangeEventHandler(object sender, ViewRowChangeEvent e);
+        public delegate void AllMessagesRowChangeEventHandler(object sender, AllMessagesRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void AllPhoneNumsRowChangeEventHandler(object sender, AllPhoneNumsRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -7445,18 +7480,20 @@ namespace CSharpEtl {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ViewDataTable : global::System.Data.TypedTableBase<ViewRow> {
+        public partial class AllMessagesDataTable : global::System.Data.TypedTableBase<AllMessagesRow> {
             
-            private global::System.Data.DataColumn columnPhone_Number;
+            private global::System.Data.DataColumn columnID;
             
-            private global::System.Data.DataColumn columnIs_Active;
+            private global::System.Data.DataColumn columnLENGTH;
             
-            private global::System.Data.DataColumn columnSUB_ID;
+            private global::System.Data.DataColumn columnDATE_SENT;
+            
+            private global::System.Data.DataColumn columnDATA_AMOUNT;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewDataTable() {
-                this.TableName = "View";
+            public AllMessagesDataTable() {
+                this.TableName = "AllMessages";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -7464,7 +7501,7 @@ namespace CSharpEtl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal ViewDataTable(global::System.Data.DataTable table) {
+            internal AllMessagesDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -7481,32 +7518,40 @@ namespace CSharpEtl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected ViewDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected AllMessagesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Phone_NumberColumn {
+            public global::System.Data.DataColumn IDColumn {
                 get {
-                    return this.columnPhone_Number;
+                    return this.columnID;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Is_ActiveColumn {
+            public global::System.Data.DataColumn LENGTHColumn {
                 get {
-                    return this.columnIs_Active;
+                    return this.columnLENGTH;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn SUB_IDColumn {
+            public global::System.Data.DataColumn DATE_SENTColumn {
                 get {
-                    return this.columnSUB_ID;
+                    return this.columnDATE_SENT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DATA_AMOUNTColumn {
+                get {
+                    return this.columnDATA_AMOUNT;
                 }
             }
             
@@ -7521,54 +7566,55 @@ namespace CSharpEtl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRow this[int index] {
+            public AllMessagesRow this[int index] {
                 get {
-                    return ((ViewRow)(this.Rows[index]));
+                    return ((AllMessagesRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event ViewRowChangeEventHandler ViewRowChanging;
+            public event AllMessagesRowChangeEventHandler AllMessagesRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event ViewRowChangeEventHandler ViewRowChanged;
+            public event AllMessagesRowChangeEventHandler AllMessagesRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event ViewRowChangeEventHandler ViewRowDeleting;
+            public event AllMessagesRowChangeEventHandler AllMessagesRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event ViewRowChangeEventHandler ViewRowDeleted;
+            public event AllMessagesRowChangeEventHandler AllMessagesRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddViewRow(ViewRow row) {
+            public void AddAllMessagesRow(AllMessagesRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRow AddViewRow(string Phone_Number, bool Is_Active, string SUB_ID) {
-                ViewRow rowViewRow = ((ViewRow)(this.NewRow()));
+            public AllMessagesRow AddAllMessagesRow(long ID, long LENGTH, System.DateTime DATE_SENT, int DATA_AMOUNT) {
+                AllMessagesRow rowAllMessagesRow = ((AllMessagesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        Phone_Number,
-                        Is_Active,
-                        SUB_ID};
-                rowViewRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowViewRow);
-                return rowViewRow;
+                        ID,
+                        LENGTH,
+                        DATE_SENT,
+                        DATA_AMOUNT};
+                rowAllMessagesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAllMessagesRow);
+                return rowAllMessagesRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRow FindByPhone_Number(string Phone_Number) {
-                return ((ViewRow)(this.Rows.Find(new object[] {
-                            Phone_Number})));
+            public AllMessagesRow FindByID(long ID) {
+                return ((AllMessagesRow)(this.Rows.Find(new object[] {
+                            ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                ViewDataTable cln = ((ViewDataTable)(base.Clone()));
+                AllMessagesDataTable cln = ((AllMessagesDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -7576,60 +7622,62 @@ namespace CSharpEtl {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new ViewDataTable();
+                return new AllMessagesDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
-                this.columnPhone_Number = base.Columns["Phone_Number"];
-                this.columnIs_Active = base.Columns["Is_Active"];
-                this.columnSUB_ID = base.Columns["SUB_ID"];
+                this.columnID = base.Columns["ID"];
+                this.columnLENGTH = base.Columns["LENGTH"];
+                this.columnDATE_SENT = base.Columns["DATE_SENT"];
+                this.columnDATA_AMOUNT = base.Columns["DATA_AMOUNT"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
-                this.columnPhone_Number = new global::System.Data.DataColumn("Phone_Number", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPhone_Number);
-                this.columnIs_Active = new global::System.Data.DataColumn("Is_Active", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIs_Active);
-                this.columnSUB_ID = new global::System.Data.DataColumn("SUB_ID", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSUB_ID);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.columnLENGTH = new global::System.Data.DataColumn("LENGTH", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLENGTH);
+                this.columnDATE_SENT = new global::System.Data.DataColumn("DATE_SENT", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDATE_SENT);
+                this.columnDATA_AMOUNT = new global::System.Data.DataColumn("DATA_AMOUNT", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDATA_AMOUNT);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnPhone_Number}, true));
-                this.columnPhone_Number.AllowDBNull = false;
-                this.columnPhone_Number.Unique = true;
-                this.columnPhone_Number.MaxLength = 9;
-                this.columnIs_Active.AllowDBNull = false;
-                this.columnSUB_ID.ReadOnly = true;
-                this.columnSUB_ID.MaxLength = 27;
+                                this.columnID}, true));
+                this.columnID.AllowDBNull = false;
+                this.columnID.Unique = true;
+                this.columnLENGTH.AllowDBNull = false;
+                this.columnDATE_SENT.AllowDBNull = false;
+                this.columnDATA_AMOUNT.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRow NewViewRow() {
-                return ((ViewRow)(this.NewRow()));
+            public AllMessagesRow NewAllMessagesRow() {
+                return ((AllMessagesRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new ViewRow(builder);
+                return new AllMessagesRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(ViewRow);
+                return typeof(AllMessagesRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.ViewRowChanged != null)) {
-                    this.ViewRowChanged(this, new ViewRowChangeEvent(((ViewRow)(e.Row)), e.Action));
+                if ((this.AllMessagesRowChanged != null)) {
+                    this.AllMessagesRowChanged(this, new AllMessagesRowChangeEvent(((AllMessagesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -7637,8 +7685,8 @@ namespace CSharpEtl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.ViewRowChanging != null)) {
-                    this.ViewRowChanging(this, new ViewRowChangeEvent(((ViewRow)(e.Row)), e.Action));
+                if ((this.AllMessagesRowChanging != null)) {
+                    this.AllMessagesRowChanging(this, new AllMessagesRowChangeEvent(((AllMessagesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -7646,8 +7694,8 @@ namespace CSharpEtl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.ViewRowDeleted != null)) {
-                    this.ViewRowDeleted(this, new ViewRowChangeEvent(((ViewRow)(e.Row)), e.Action));
+                if ((this.AllMessagesRowDeleted != null)) {
+                    this.AllMessagesRowDeleted(this, new AllMessagesRowChangeEvent(((AllMessagesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -7655,14 +7703,14 @@ namespace CSharpEtl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.ViewRowDeleting != null)) {
-                    this.ViewRowDeleting(this, new ViewRowChangeEvent(((ViewRow)(e.Row)), e.Action));
+                if ((this.AllMessagesRowDeleting != null)) {
+                    this.AllMessagesRowDeleting(this, new AllMessagesRowChangeEvent(((AllMessagesRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemoveViewRow(ViewRow row) {
+            public void RemoveAllMessagesRow(AllMessagesRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -7689,7 +7737,309 @@ namespace CSharpEtl {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "ViewDataTable";
+                attribute2.FixedValue = "AllMessagesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AllPhoneNumsDataTable : global::System.Data.TypedTableBase<AllPhoneNumsRow> {
+            
+            private global::System.Data.DataColumn columnID;
+            
+            private global::System.Data.DataColumn columnPhone_Number;
+            
+            private global::System.Data.DataColumn columnIs_Active;
+            
+            private global::System.Data.DataColumn columnSub_Id;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsDataTable() {
+                this.TableName = "AllPhoneNums";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal AllPhoneNumsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected AllPhoneNumsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn IDColumn {
+                get {
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Phone_NumberColumn {
+                get {
+                    return this.columnPhone_Number;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Is_ActiveColumn {
+                get {
+                    return this.columnIs_Active;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Sub_IdColumn {
+                get {
+                    return this.columnSub_Id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRow this[int index] {
+                get {
+                    return ((AllPhoneNumsRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event AllPhoneNumsRowChangeEventHandler AllPhoneNumsRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event AllPhoneNumsRowChangeEventHandler AllPhoneNumsRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event AllPhoneNumsRowChangeEventHandler AllPhoneNumsRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event AllPhoneNumsRowChangeEventHandler AllPhoneNumsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void AddAllPhoneNumsRow(AllPhoneNumsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRow AddAllPhoneNumsRow(long ID, string Phone_Number, int Is_Active, string Sub_Id) {
+                AllPhoneNumsRow rowAllPhoneNumsRow = ((AllPhoneNumsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        ID,
+                        Phone_Number,
+                        Is_Active,
+                        Sub_Id};
+                rowAllPhoneNumsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAllPhoneNumsRow);
+                return rowAllPhoneNumsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRow FindByPhone_Number(string Phone_Number) {
+                return ((AllPhoneNumsRow)(this.Rows.Find(new object[] {
+                            Phone_Number})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                AllPhoneNumsDataTable cln = ((AllPhoneNumsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AllPhoneNumsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnID = base.Columns["ID"];
+                this.columnPhone_Number = base.Columns["Phone_Number"];
+                this.columnIs_Active = base.Columns["Is_Active"];
+                this.columnSub_Id = base.Columns["Sub_Id"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.columnPhone_Number = new global::System.Data.DataColumn("Phone_Number", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPhone_Number);
+                this.columnIs_Active = new global::System.Data.DataColumn("Is_Active", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIs_Active);
+                this.columnSub_Id = new global::System.Data.DataColumn("Sub_Id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSub_Id);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnPhone_Number}, true));
+                this.columnPhone_Number.AllowDBNull = false;
+                this.columnPhone_Number.Unique = true;
+                this.columnPhone_Number.MaxLength = 9;
+                this.columnSub_Id.MaxLength = 27;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRow NewAllPhoneNumsRow() {
+                return ((AllPhoneNumsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AllPhoneNumsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(AllPhoneNumsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AllPhoneNumsRowChanged != null)) {
+                    this.AllPhoneNumsRowChanged(this, new AllPhoneNumsRowChangeEvent(((AllPhoneNumsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AllPhoneNumsRowChanging != null)) {
+                    this.AllPhoneNumsRowChanging(this, new AllPhoneNumsRowChangeEvent(((AllPhoneNumsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AllPhoneNumsRowDeleted != null)) {
+                    this.AllPhoneNumsRowDeleted(this, new AllPhoneNumsRowChangeEvent(((AllPhoneNumsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AllPhoneNumsRowDeleting != null)) {
+                    this.AllPhoneNumsRowDeleting(this, new AllPhoneNumsRowChangeEvent(((AllPhoneNumsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void RemoveAllPhoneNumsRow(AllPhoneNumsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ZDB_TELCOMDataSet ds = new ZDB_TELCOMDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AllPhoneNumsDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -9692,11 +10042,11 @@ namespace CSharpEtl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string SURNAME {
                 get {
-                    try {
-                        return ((string)(this[this.tableALL_SUBS.SURNAMEColumn]));
+                    if (this.IsSURNAMENull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SURNAME\' in table \'ALL_SUBS\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableALL_SUBS.SURNAMEColumn]));
                     }
                 }
                 set {
@@ -9708,11 +10058,11 @@ namespace CSharpEtl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string SEX {
                 get {
-                    try {
-                        return ((string)(this[this.tableALL_SUBS.SEXColumn]));
+                    if (this.IsSEXNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SEX\' in table \'ALL_SUBS\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableALL_SUBS.SEXColumn]));
                     }
                 }
                 set {
@@ -9815,65 +10165,186 @@ namespace CSharpEtl {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class ViewRow : global::System.Data.DataRow {
+        public partial class AllMessagesRow : global::System.Data.DataRow {
             
-            private ViewDataTable tableView;
+            private AllMessagesDataTable tableAllMessages;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal ViewRow(global::System.Data.DataRowBuilder rb) : 
+            internal AllMessagesRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableView = ((ViewDataTable)(this.Table));
+                this.tableAllMessages = ((AllMessagesDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public long ID {
+                get {
+                    return ((long)(this[this.tableAllMessages.IDColumn]));
+                }
+                set {
+                    this[this.tableAllMessages.IDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public long LENGTH {
+                get {
+                    return ((long)(this[this.tableAllMessages.LENGTHColumn]));
+                }
+                set {
+                    this[this.tableAllMessages.LENGTHColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime DATE_SENT {
+                get {
+                    return ((global::System.DateTime)(this[this.tableAllMessages.DATE_SENTColumn]));
+                }
+                set {
+                    this[this.tableAllMessages.DATE_SENTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int DATA_AMOUNT {
+                get {
+                    try {
+                        return ((int)(this[this.tableAllMessages.DATA_AMOUNTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DATA_AMOUNT\' in table \'AllMessages\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllMessages.DATA_AMOUNTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsDATA_AMOUNTNull() {
+                return this.IsNull(this.tableAllMessages.DATA_AMOUNTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetDATA_AMOUNTNull() {
+                this[this.tableAllMessages.DATA_AMOUNTColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class AllPhoneNumsRow : global::System.Data.DataRow {
+            
+            private AllPhoneNumsDataTable tableAllPhoneNums;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal AllPhoneNumsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAllPhoneNums = ((AllPhoneNumsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public long ID {
+                get {
+                    try {
+                        return ((long)(this[this.tableAllPhoneNums.IDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ID\' in table \'AllPhoneNums\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllPhoneNums.IDColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string Phone_Number {
                 get {
-                    return ((string)(this[this.tableView.Phone_NumberColumn]));
+                    return ((string)(this[this.tableAllPhoneNums.Phone_NumberColumn]));
                 }
                 set {
-                    this[this.tableView.Phone_NumberColumn] = value;
+                    this[this.tableAllPhoneNums.Phone_NumberColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Is_Active {
-                get {
-                    return ((bool)(this[this.tableView.Is_ActiveColumn]));
-                }
-                set {
-                    this[this.tableView.Is_ActiveColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string SUB_ID {
+            public int Is_Active {
                 get {
                     try {
-                        return ((string)(this[this.tableView.SUB_IDColumn]));
+                        return ((int)(this[this.tableAllPhoneNums.Is_ActiveColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SUB_ID\' in table \'View\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Is_Active\' in table \'AllPhoneNums\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableView.SUB_IDColumn] = value;
+                    this[this.tableAllPhoneNums.Is_ActiveColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSUB_IDNull() {
-                return this.IsNull(this.tableView.SUB_IDColumn);
+            public string Sub_Id {
+                get {
+                    try {
+                        return ((string)(this[this.tableAllPhoneNums.Sub_IdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Sub_Id\' in table \'AllPhoneNums\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllPhoneNums.Sub_IdColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSUB_IDNull() {
-                this[this.tableView.SUB_IDColumn] = global::System.Convert.DBNull;
+            public bool IsIDNull() {
+                return this.IsNull(this.tableAllPhoneNums.IDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetIDNull() {
+                this[this.tableAllPhoneNums.IDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsIs_ActiveNull() {
+                return this.IsNull(this.tableAllPhoneNums.Is_ActiveColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetIs_ActiveNull() {
+                this[this.tableAllPhoneNums.Is_ActiveColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsSub_IdNull() {
+                return this.IsNull(this.tableAllPhoneNums.Sub_IdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetSub_IdNull() {
+                this[this.tableAllPhoneNums.Sub_IdColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -10561,22 +11032,56 @@ namespace CSharpEtl {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class ViewRowChangeEvent : global::System.EventArgs {
+        public class AllMessagesRowChangeEvent : global::System.EventArgs {
             
-            private ViewRow eventRow;
+            private AllMessagesRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRowChangeEvent(ViewRow row, global::System.Data.DataRowAction action) {
+            public AllMessagesRowChangeEvent(AllMessagesRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ViewRow Row {
+            public AllMessagesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class AllPhoneNumsRowChangeEvent : global::System.EventArgs {
+            
+            private AllPhoneNumsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRowChangeEvent(AllPhoneNumsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public AllPhoneNumsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -17305,8 +17810,8 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT ID, NAME, SURNAME, SEX, START_DATE, END_DATE, SUBSCRIPTION_PLANID FROM dbo" +
-                ".ALL_SUBS WHERE SURNAME IS NOT NULL";
+            this._commandCollection[0].CommandText = "SELECT        ID, NAME, SURNAME, SEX, START_DATE, END_DATE, SUBSCRIPTION_PLANID\r\n" +
+                "FROM            ALL_SUBS";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -17344,7 +17849,7 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class ViewTableAdapter : global::System.ComponentModel.Component {
+    public partial class AllMessagesTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -17358,7 +17863,7 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public ViewTableAdapter() {
+        public AllMessagesTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -17455,10 +17960,11 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "View";
-            tableMapping.ColumnMappings.Add("Phone_Number", "Phone_Number");
-            tableMapping.ColumnMappings.Add("Is_Active", "Is_Active");
-            tableMapping.ColumnMappings.Add("SUB_ID", "SUB_ID");
+            tableMapping.DataSetTable = "AllMessages";
+            tableMapping.ColumnMappings.Add("ID", "ID");
+            tableMapping.ColumnMappings.Add("LENGTH", "LENGTH");
+            tableMapping.ColumnMappings.Add("DATE_SENT", "DATE_SENT");
+            tableMapping.ColumnMappings.Add("DATA_AMOUNT", "DATA_AMOUNT");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -17475,7 +17981,7 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Phone_Number, Is_Active, SUB_ID FROM dbo.[View]";
+            this._commandCollection[0].CommandText = "SELECT ID, LENGTH, DATE_SENT, DATA_AMOUNT FROM dbo.AllMessages";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -17483,7 +17989,7 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(ZDB_TELCOMDataSet.ViewDataTable dataTable) {
+        public virtual int Fill(ZDB_TELCOMDataSet.AllMessagesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -17496,9 +18002,179 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ZDB_TELCOMDataSet.ViewDataTable GetData() {
+        public virtual ZDB_TELCOMDataSet.AllMessagesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            ZDB_TELCOMDataSet.ViewDataTable dataTable = new ZDB_TELCOMDataSet.ViewDataTable();
+            ZDB_TELCOMDataSet.AllMessagesDataTable dataTable = new ZDB_TELCOMDataSet.AllMessagesDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AllPhoneNumsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public AllPhoneNumsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "AllPhoneNums";
+            tableMapping.ColumnMappings.Add("ID", "ID");
+            tableMapping.ColumnMappings.Add("Phone_Number", "Phone_Number");
+            tableMapping.ColumnMappings.Add("Is_Active", "Is_Active");
+            tableMapping.ColumnMappings.Add("Sub_Id", "Sub_Id");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::CSharpEtl.Properties.Settings.Default.ZDB_TELCOMConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT ID, Phone_Number, Is_Active, Sub_Id FROM dbo.AllPhoneNums";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(ZDB_TELCOMDataSet.AllPhoneNumsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual ZDB_TELCOMDataSet.AllPhoneNumsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            ZDB_TELCOMDataSet.AllPhoneNumsDataTable dataTable = new ZDB_TELCOMDataSet.AllPhoneNumsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -18114,21 +18790,21 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._transmiter_CallTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._transmiter_CallTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._number_CallTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Number_Call.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._number_CallTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -18141,12 +18817,12 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._transmiter_CallTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(updatedRows));
+                    result = (result + this._transmiter_CallTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -18272,19 +18948,19 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._transmiter_CallTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._transmiter_CallTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._number_CallTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Number_Call.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._number_CallTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -18296,11 +18972,11 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._transmiter_CallTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(addedRows));
+                    result = (result + this._transmiter_CallTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -18314,11 +18990,11 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateDeletedRows(ZDB_TELCOMDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._transmiter_CallTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(deletedRows));
+                    result = (result + this._transmiter_CallTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -18330,19 +19006,19 @@ SELECT TransmiterID, MessageID FROM Transmiter_Message WHERE (MessageID = @Messa
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._trans_Inter_Pac_UsgTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Trans_Inter_Pac_Usg.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._trans_Inter_Pac_UsgTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._number_CallTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Number_Call.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._number_CallTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._transmiter_CallTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Transmiter_Call.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._transmiter_CallTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
