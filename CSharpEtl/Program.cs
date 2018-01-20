@@ -15,14 +15,16 @@ namespace CSharpEtl
 
         static void Main(string[] args)
         {
+            Stopwatch mainStopWatch = new Stopwatch();
             Stopwatch stopwatch = new Stopwatch();
+            int allDataCount = 0;
             orclConnStr = File.ReadAllLines("oracleConnStr.txt")[0];
- 
+            mainStopWatch.Start();
+            Console.WriteLine("BEGIN TRANSFER");
             OracleConnection oracleConnection = new OracleConnection(orclConnStr);
             try
             {
                 oracleConnection.Open();
-
                 using (var adapter = new Subscription_typeTableAdapter())
                 {
                     stopwatch.Start();
@@ -50,6 +52,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_Desc);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("SUBSCRIPTION_PLAN DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -81,6 +84,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_Lang);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("COUNTRY DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -136,6 +140,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_TransmitterId);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -178,6 +183,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_Type);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("CALL DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -215,6 +221,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_DataAmount);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("MESSAGE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -255,6 +262,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_PlaceId);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("CALL_PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -280,11 +288,16 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_PlaceId);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("MESSAGE_PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
 
-                RemotePlaceData = null;
+                //RESTART CONNECTION
+                oracleConnection.Dispose();
+                oracleConnection = new OracleConnection(orclConnStr);
+                oracleConnection.Open();
+                Console.WriteLine("RESETING CONNECTION");
 
                 using (var adapter = new ALL_SUBSTableAdapter())
                 {
@@ -338,6 +351,7 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_SubscriptionPlanId);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("ACCOUNT DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
@@ -375,7 +389,145 @@ namespace CSharpEtl
                     cmd.Parameters.Add(p_AccountId);
                     cmd.ExecuteNonQuery();
                     stopwatch.Stop();
+                    allDataCount += data.Count;
                     Console.WriteLine("PHONE_NUMBER DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                stopwatch.Start();
+                Dictionary<string,string> RemotePhoneNumberData = new Dictionary<string, string>();
+                OracleCommand readPhoneCmd = new OracleCommand()
+                {
+                    Connection = oracleConnection,
+                    CommandText = "SELECT ID, PH_NUMBER FROM ii738.PHONE_NUMBER",
+                    CommandType = System.Data.CommandType.Text
+                };
+                using (var rdr = readPhoneCmd.ExecuteReader())
+                    while (rdr.Read())
+                        RemotePhoneNumberData.Add(rdr.GetValue(1).ToString(),rdr.GetValue(0).ToString());
+                stopwatch.Stop();
+                Console.WriteLine("FETCHED REMOTE PHONE NUMBER DATA IN {0}", stopwatch.Elapsed);
+                stopwatch.Reset();
+
+                using (var adapter = new Internet_Packet_UsageTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_Id = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.ID).ToArray()
+                    };
+                    OracleParameter p_StartDate = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => s.Date_started).ToArray()
+                    };
+                    OracleParameter p_EndDate = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.TimeStamp,
+                        Value = data.Select(s => s.Date_ended).ToArray()
+                    };
+                    OracleParameter p_Amount = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Int32,
+                        Value = data.Select(s => s.Bytes_uploaded+s.Bytes_downloaded).ToArray()
+                    };
+                    OracleParameter p_PhoneNumberId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePhoneNumberData[s.NumberNumber]).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.DATA_TRANSMISSION (ID, START_DATE, END_DATE, AMOUNT, PHONE_NUMBERID) VALUES (:1, :2, :3, :4, :5)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_Id);
+                    cmd.Parameters.Add(p_StartDate);
+                    cmd.Parameters.Add(p_EndDate);
+                    cmd.Parameters.Add(p_Amount);
+                    cmd.Parameters.Add(p_PhoneNumberId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    allDataCount += data.Count;
+                    Console.WriteLine("DATA_TRANSMISSION DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                using (var adapter = new Trans_Inter_Pac_UsgTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_TransmissionId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.Internet_Packet_UsageID).ToArray()
+                    };
+                    OracleParameter p_PlaceId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePlaceData[(int)s.TransmiterID]).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.DATA_TRANSMISSION_PLACE (DATA_TRANSMISSIONID, PLACEID) VALUES (:1, :2)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_TransmissionId);
+                    cmd.Parameters.Add(p_PlaceId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    allDataCount += data.Count;
+                    Console.WriteLine("DATA_TRANSMISSION_PLACE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                using (var adapter = new Number_CallTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_PhoneNumberId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePhoneNumberData[s.NumberNumber]).ToArray()
+                    };
+                    OracleParameter p_CallId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS"+s.CallID).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.PHONE_NUMBER_CALL (PHONE_NUMBERID, CALLID) VALUES (:1, :2)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_PhoneNumberId);
+                    cmd.Parameters.Add(p_CallId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    allDataCount += data.Count;
+                    Console.WriteLine("PHONE_NUMBER_CALL DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
+                    stopwatch.Reset();
+                }
+
+                using (var adapter = new Number_MessageTableAdapter())
+                {
+                    stopwatch.Start();
+                    var data = adapter.GetData();
+                    OracleParameter p_PhoneNumberId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => RemotePhoneNumberData[s.NumberNumber]).ToArray()
+                    };
+                    OracleParameter p_MessageId = new OracleParameter()
+                    {
+                        OracleDbType = OracleDbType.Varchar2,
+                        Value = data.Select(s => "MS" + s.MessageID).ToArray()
+                    };
+                    OracleCommand cmd = oracleConnection.CreateCommand();
+                    cmd.CommandText = "INSERT INTO ii738.PHONE_NUMBER_MESSAGE (PHONE_NUMBERID, MESSAGEID) VALUES (:1, :2)";
+                    cmd.ArrayBindCount = data.Count;
+                    cmd.Parameters.Add(p_PhoneNumberId);
+                    cmd.Parameters.Add(p_MessageId);
+                    cmd.ExecuteNonQuery();
+                    stopwatch.Stop();
+                    allDataCount += data.Count;
+                    Console.WriteLine("PHONE_NUMBER_MESSAGE DONE, {0} RECORDS IN {1}", data.Count, stopwatch.Elapsed);
                     stopwatch.Reset();
                 }
             }
@@ -390,8 +542,10 @@ namespace CSharpEtl
             }
             finally
             {
+                mainStopWatch.Stop();
                 oracleConnection.Dispose();
                 Console.WriteLine("DONE!");
+                Console.WriteLine("TRANSFERED {0} RECORDS IN {1}", allDataCount, mainStopWatch.Elapsed);
                 Console.ReadLine();
             }
         }
